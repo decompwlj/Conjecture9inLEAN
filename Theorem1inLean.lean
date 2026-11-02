@@ -3,3 +3,7 @@ import Theorem1inLean.Primes
 import Theorem1inLean.Table2
 import Theorem1inLean.Counting
 import Theorem1inLean.Theorem1
+import Theorem1inLean.Sieve.PrimeSums
+import Theorem1inLean.Sieve.RootCount
+import Theorem1inLean.Sieve.Brun
+import Theorem1inLean.Sieve.SieveBound

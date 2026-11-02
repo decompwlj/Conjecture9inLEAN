@@ -24,6 +24,8 @@ open WLJ
 #check @WLJ.levelCount_le
 #check @WLJ.Table2.classifiedByLevel_P_small
 #check @WLJ.theorem1_of_sieve
+#check @WLJ.Sieve.tripleSieveBound
+#check @WLJ.theorem1
 
 -- The axioms used by the proofs.
 #print axioms WLJ.lemma_1_1
@@ -32,3 +34,5 @@ open WLJ
 #print axioms WLJ.levelCount_le
 #print axioms WLJ.Table2.classifiedByLevel_P_small
 #print axioms WLJ.theorem1_of_sieve
+#print axioms WLJ.Sieve.tripleSieveBound
+#print axioms WLJ.theorem1

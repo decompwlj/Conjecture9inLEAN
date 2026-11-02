@@ -18,8 +18,9 @@ to a new classification of primes*, [arXiv:0711.0865](https://arxiv.org/abs/0711
 | Table 2 of the paper (first 17 primes) is reproduced | `WLJ.Table2.*` | ✅ checked by the kernel |
 | **Structural lemma**: if `p_n` is classified by level and `g_n⁴ ≤ l_n`, then `l_n = s·q` with `q` prime and `s ≤ g_n` | `WLJ.lval_eq_mul_prime_of_classifiedByLevel` | ✅ proved |
 | Counting bound (below) | `WLJ.levelCount_le` | ✅ proved |
-| **Theorem 1**, assuming a classical sieve bound for prime triples | `WLJ.theorem1_of_sieve : TripleSieveBound → Theorem1` | ✅ proved |
-| The sieve bound `TripleSieveBound` itself | — | ⏳ not in Mathlib yet (see below) |
+| Reduction of Theorem 1 to a sieve bound for prime triples | `WLJ.theorem1_of_sieve : TripleSieveBound → Theorem1` | ✅ proved |
+| The sieve bound `TripleSieveBound` (Brun's pure sieve) | `WLJ.Sieve.tripleSieveBound` | ✅ proved |
+| **Theorem 1** | `WLJ.theorem1 : Theorem1` | ✅ **proved, unconditionally** |
 
 There is no `sorry` and no new axiom anywhere. The proofs use only Lean's three standard axioms
 (`propext`, `Classical.choice`, `Quot.sound`).
@@ -34,7 +35,7 @@ def Theorem1 : Prop :=
   Tendsto (fun N : ℕ => (#{n < N | P n is classified by level} : ℝ) / N) atTop (𝓝 0)
 ```
 
-### The one hypothesis: `TripleSieveBound`
+### The sieve bound `TripleSieveBound`
 
 ```lean
 def TripleSieveBound : Prop :=
@@ -43,11 +44,23 @@ def TripleSieveBound : Prop :=
       ≤ C * X * log (g s + 2)^3 * (log log X)^3 / (log X)^3
 ```
 
-This is a standard upper-bound sieve estimate for three linear forms. Brun's pure sieve gives it,
-and Selberg's sieve gives it even without the `(log log X)³` factor (see Halberstam & Richert,
-*Sieve Methods*). Mathlib has the Chebyshev bounds and the basic setup of the Selberg sieve, but not
-this final estimate. Formalizing it would make Theorem 1 unconditional, and it is the natural next
-step.
+This is a standard upper-bound sieve estimate for three linear forms. It is not in Mathlib, so it
+is proved here (`Theorem1inLean/Sieve/`) with **Brun's pure sieve**:
+
+1. **Prime sums** (`PrimeSums.lean`).
+   * Euler product: `∏_{p<N} (1 − 1/p) ≤ 1/log N`. This comes from Mathlib's Euler product for
+     `n^{-σ}`, letting `σ → 1⁺`.
+   * Mertens-type bound: `∑_{p<N} 1/p ≤ cM (1 + log(log₂ N + 1))`. This comes from Mathlib's
+     Chebyshev bound `π(x) ≪ x/log x`, summed over dyadic blocks.
+   * `∏_{p|m} (1 − 1/p)⁻¹ ≤ e (log₂ m + 1)`.
+2. **Root counting** (`RootCount.lean`). For a prime `p ∤ 2gs`, `F(q) = q(sq+g)(sq+2g)` has
+   exactly 3 roots mod `p`. By the Chinese remainder theorem it has `3^|B|` roots mod `∏_{p∈B} p`,
+   so `#{q < M : ∏B | F(q)} = M·3^|B|/∏B + O(3^|B|)`.
+3. **Brun's inequality** (`Brun.lean`). Write `P = {p < z : p ∤ 2gs}`. The Bonferroni inequalities
+   (inclusion–exclusion truncated at an even level `2k`) and Rankin's trick for the tail give
+
+   `#{q < M : all prime} ≤ z + M (∏_P (1 − 3/p) + e^{−(2k+1)} e^{3e ∑_P 1/p}) + (3(z+1))^{2k}`.
+4. **Parameters** (`SieveBound.lean`). Take `k ≈ C log log X` and `z = exp(log X / 4k)`.
 
 ## The proof (human-readable)
 
@@ -74,6 +87,7 @@ Write `g = g_n` (the jump), `l = l_n = p_n − g`, `k = k_n` (the weight) and `L
    `N ≥ x / (2 log x)` (`Chebyshev.pi_ge` in Mathlib) then gives
 
    `#{n < N | level}/N ≤ 2/√(log x) + 6 (log x)⁷/x + 3072 C (log log x)⁷/√(log x) → 0`.
+5. **The sieve bound** is proved with Brun's pure sieve, as described above.
 
 The paper's data fits this: 17.11 % of the primes below `p_{5·10⁷}` are classified by level, and
 the heuristic proportion `≈ log log x / log x` goes to 0 very slowly.
@@ -88,7 +102,7 @@ Each push runs the workflow in `.github/workflows/lean.yml`. To check it:
 2. Open the latest **Verify Lean proof** run. A green ✓ means Lean accepted every proof.
 3. Open the "Build and check the proof" step. At the end it prints the statements and lines like
    ```
-   'WLJ.theorem1_of_sieve' depends on axioms: [propext, Classical.choice, Quot.sound]
+   'WLJ.theorem1' depends on axioms: [propext, Classical.choice, Quot.sound]
    ```
    The run fails if any proof uses `sorry` or if a new axiom was added.
 
@@ -118,7 +132,8 @@ mean. They are short and printed by `Verify.lean`:
 
 * `Theorem1inLean/Decomposition.lean`: `jump`, `lval`, `weight`, `level`, `ClassifiedByLevel`.
 * `Theorem1inLean/Counting.lean`: `levelCount`, `tripleSet`.
-* `Theorem1inLean/Theorem1.lean`: `Theorem1`, `TripleSieveBound`, `theorem1_of_sieve`.
+* `Theorem1inLean/Theorem1.lean`: `Theorem1` and `TripleSieveBound`.
+* `Theorem1inLean/Sieve/SieveBound.lean`: the final line, `theorem theorem1 : Theorem1`.
 
 ## Files
 
@@ -127,7 +142,11 @@ Theorem1inLean/Decomposition.lean  definitions, Lemma 1.1, decomposition, struct
 Theorem1inLean/Primes.lean         the sequence of primes P n and its basic properties
 Theorem1inLean/Table2.lean         kernel check of Table 2 of the paper
 Theorem1inLean/Counting.lean       the combinatorial counting bound
-Theorem1inLean/Theorem1.lean       statement of Theorem 1 and its proof from the sieve bound
+Theorem1inLean/Theorem1.lean       statement of Theorem 1 and its reduction to the sieve bound
+Theorem1inLean/Sieve/PrimeSums.lean   Euler product, Mertens-type and local-factor bounds
+Theorem1inLean/Sieve/RootCount.lean   roots of q(sq+g)(sq+2g) mod products of primes (CRT)
+Theorem1inLean/Sieve/Brun.lean        Brun's pure sieve for prime triples
+Theorem1inLean/Sieve/SieveBound.lean  choice of parameters; proof of TripleSieveBound and Theorem 1
 Verify.lean                        prints statements and axioms
 scripts/verify.sh                  one-command verification
 ```

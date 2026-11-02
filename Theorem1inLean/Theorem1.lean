@@ -6,15 +6,14 @@
 Formally: the proportion of the first `N` primes that are classified by level (`k_n > L_n`)
 tends to `0` as `N → ∞`.
 
-## Status of the proof
+## Structure of the proof
 
-The proof is complete **relative to one explicitly stated hypothesis**, `TripleSieveBound`,
-which is a classical upper-bound sieve estimate for prime triples (a direct consequence of
-Brun's pure sieve or of Selberg's sieve; see `README.md`). That estimate is not yet available in
-Mathlib. Everything else is proved here: there is no `sorry` and no new axiom (`#print axioms`
-in `Verify.lean` checks this). The main result is
+This file reduces Theorem 1 to a sieve estimate for prime triples, `TripleSieveBound`:
 
   `theorem1_of_sieve : TripleSieveBound → Theorem1`.
+
+`TripleSieveBound` itself is proved with Brun's pure sieve in `Sieve/SieveBound.lean`
+(`WLJ.Sieve.tripleSieveBound`), which also states the unconditional `WLJ.theorem1 : Theorem1`.
 
 ## Proof outline
 
@@ -38,8 +37,7 @@ open Finset Real Filter Topology Asymptotics
 
   #{q ≤ X | q, s q + g, s q + 2 g all prime} ≤ C · X · log(g s + 2)³ · (log log X)³ / (log X)³.
 
-This is a classical consequence of Brun's pure sieve (or of Selberg's upper-bound sieve), which
-gives even the stronger bound without the factor `(log log X)³`. -/
+This is a classical consequence of Brun's pure sieve; it is proved in `Sieve/SieveBound.lean`. -/
 def TripleSieveBound : Prop :=
   ∃ C : ℝ, ∀ g s : ℕ, 1 ≤ g → 1 ≤ s → ∀ X : ℝ, 16 ≤ X →
     ((tripleSet g s X).card : ℝ) ≤ C * X * log (g * s + 2) ^ 3 * log (log X) ^ 3 / log X ^ 3
