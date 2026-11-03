@@ -15,6 +15,9 @@ to a new classification of primes*, [arXiv:0711.0865](https://arxiv.org/abs/0711
 | Definitions of jump `d_n`, `l_n`, weight `k_n`, level `L_n`, "classified by level" | `WLJ.jump`, `WLJ.lval`, `WLJ.weight`, `WLJ.level`, `WLJ.ClassifiedByLevel` | ✅ |
 | Lemma 1.1: the decomposition exists iff `a_{n+1} < (3/2) a_n` | `WLJ.lemma_1_1` | ✅ proved |
 | `a_n = k_n × L_n + d_n` with `d_n < k_n` (Euclidean division) | `WLJ.decomposition` | ✅ proved |
+| **Existence**: a decomposition `a_n = k·L + d_n` with `d_n < k`, `L ≥ 1` exists iff `l_n ≠ 0` | `WLJ.exists_decomposition_iff` | ✅ proved |
+| **Uniqueness**: `(k_n, L_n)` is the unique pair with `a_n = k·L + d_n`, `d_n < k` and `k` minimal | `WLJ.decomposition_unique` | ✅ proved |
+| Euclidean division: `a_n / k_n = L_n`, `a_n mod k_n = d_n`, and `k_n = min {k > d_n : a_n mod k = d_n}` | `WLJ.div_weight_eq_level`, `WLJ.mod_weight_eq_jump`, `WLJ.isLeast_weight` | ✅ proved |
 | Table 2 of the paper (first 17 primes) is reproduced | `WLJ.Table2.*` | ✅ checked by the kernel |
 | **Structural lemma**: if `p_n` is classified by level and `g_n⁴ ≤ l_n`, then `l_n = s·q` with `q` prime and `s ≤ g_n` | `WLJ.lval_eq_mul_prime_of_classifiedByLevel` | ✅ proved |
 | Counting bound (below) | `WLJ.levelCount_le` | ✅ proved |
@@ -139,6 +142,7 @@ mean. They are short and printed by `Verify.lean`:
 
 ```
 Theorem1inLean/Decomposition.lean  definitions, Lemma 1.1, decomposition, structural lemma
+Theorem1inLean/Uniqueness.lean     existence and uniqueness of the decomposition
 Theorem1inLean/Primes.lean         the sequence of primes P n and its basic properties
 Theorem1inLean/Table2.lean         kernel check of Table 2 of the paper
 Theorem1inLean/Counting.lean       the combinatorial counting bound

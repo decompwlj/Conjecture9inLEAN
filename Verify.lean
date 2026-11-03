@@ -20,6 +20,9 @@ open WLJ
 
 #check @WLJ.lemma_1_1
 #check @WLJ.decomposition
+#check @WLJ.exists_decomposition_iff
+#check @WLJ.decomposition_unique
+#check @WLJ.isLeast_weight
 #check @WLJ.lval_eq_mul_prime_of_classifiedByLevel
 #check @WLJ.levelCount_le
 #check @WLJ.Table2.classifiedByLevel_P_small
@@ -30,6 +33,9 @@ open WLJ
 -- The axioms used by the proofs.
 #print axioms WLJ.lemma_1_1
 #print axioms WLJ.decomposition
+#print axioms WLJ.exists_decomposition_iff
+#print axioms WLJ.decomposition_unique
+#print axioms WLJ.isLeast_weight
 #print axioms WLJ.lval_eq_mul_prime_of_classifiedByLevel
 #print axioms WLJ.levelCount_le
 #print axioms WLJ.Table2.classifiedByLevel_P_small
