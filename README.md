@@ -4,7 +4,7 @@
 
 # Conjecture 9, formally proved in Lean 4
 
-[![Verify Lean proof](https://github.com/decompwlj/Conjecture9inLEAN/actions/workflows/lean.yml/badge.svg)](https://github.com/decompwlj/Conjecture9inLEAN/actions/workflows/lean.yml)
+[![Verify Lean proof](https://img.shields.io/github/actions/workflow/status/decompwlj/Conjecture9inLEAN/lean.yml?branch=main&label=Verify%20Lean%20proof)](https://github.com/decompwlj/Conjecture9inLEAN/actions/workflows/lean.yml?query=branch%3Amain)
 [![Lean 4](https://img.shields.io/badge/Lean-v4.35.0-0b3d91)](https://lean-lang.org)
 [![Mathlib](https://img.shields.io/badge/Mathlib-v4.35.0-5e81f4)](https://github.com/leanprover-community/mathlib4)
 [![arXiv](https://img.shields.io/badge/arXiv-0711.0865-b31b1b)](https://arxiv.org/abs/0711.0865)
@@ -17,6 +17,9 @@
 This repository contains a **complete, machine-checked proof** of Conjecture 9 in
 [Lean 4](https://lean-lang.org) with [Mathlib](https://github.com/leanprover-community/mathlib4).
 It has no `sorry` and no extra axioms, and GitHub Actions re-checks it on every push.
+
+🌐 **Atlas:** [decompwlj.net](https://decompwlj.net) — 5000 OEIS integer sequences decomposed into
+weight × level + jump with interactive 3D/2D three.js graphs.
 
 ## In one minute
 
@@ -225,5 +228,9 @@ This formalization:
 }
 ```
 
-See also the [OEIS wiki page](https://oeis.org/wiki/Decomposition_into_weight_*_level_%2B_jump)
-on the decomposition.
+## See also
+
+* [decompwlj.net](https://decompwlj.net): 5000 OEIS integer sequences decomposed into
+  weight × level + jump with interactive 3D/2D three.js graphs.
+* The [OEIS wiki page](https://oeis.org/wiki/Decomposition_into_weight_*_level_%2B_jump) on the
+  decomposition.
