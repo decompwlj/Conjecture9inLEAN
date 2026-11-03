@@ -4,7 +4,7 @@
 `P n = Nat.nth Nat.Prime n` is the `n`-th prime, **counted from 0** (`P 0 = 2`, `P 1 = 3`, …).
 So the paper's `p_n` is our `P (n - 1)`; this shift is irrelevant for density statements.
 -/
-import Theorem1inLean.Decomposition
+import Conjecture9.Decomposition
 
 namespace WLJ
 

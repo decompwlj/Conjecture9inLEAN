@@ -18,7 +18,7 @@ For an increasing sequence of natural numbers `a : ℕ → ℕ` we define, exact
 and we prove that `a n = k n * L n + d n` whenever `l n ≠ 0` (Lemma 1.1 gives the condition
 `2 * a (n+1) < 3 * a n` for this).
 
-We also prove the structural lemma that is the arithmetic heart of Theorem 1:
+We also prove the structural lemma that is the arithmetic heart of Conjecture 9:
 if `a n` is *classified by level* (`k n > L n`) and `d n ^ 4 ≤ l n`, then
 `l n = s * q` with `q` prime and `s ≤ d n`.
 -/

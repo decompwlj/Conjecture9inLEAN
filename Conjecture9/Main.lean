@@ -1,5 +1,5 @@
 /-
-# Theorem 1 (= Conjecture 9 of arXiv:0711.0865)
+# Conjecture 9 of arXiv:0711.0865
 
 > The prime numbers classified by level are rarefying among the primes.
 
@@ -8,12 +8,12 @@ tends to `0` as `N → ∞`.
 
 ## Structure of the proof
 
-This file reduces Theorem 1 to a sieve estimate for prime triples, `TripleSieveBound`:
+This file reduces Conjecture 9 to a sieve estimate for prime triples, `TripleSieveBound`:
 
-  `theorem1_of_sieve : TripleSieveBound → Theorem1`.
+  `conjecture9_of_sieve : TripleSieveBound → Conjecture9`.
 
 `TripleSieveBound` itself is proved with Brun's pure sieve in `Sieve/SieveBound.lean`
-(`WLJ.Sieve.tripleSieveBound`), which also states the unconditional `WLJ.theorem1 : Theorem1`.
+(`WLJ.Sieve.tripleSieveBound`), which also states the unconditional `WLJ.conjecture9 : Conjecture9`.
 
 ## Proof outline
 
@@ -27,7 +27,7 @@ sum over `s` contributes a factor `∑ 1/s ≤ 1 + log G`). Since `N ≫ x / log
 
   ≪ 1/√(log x) + (log x)⁷/x + (log log x)⁷/√(log x) → 0.
 -/
-import Theorem1inLean.Counting
+import Conjecture9.Counting
 
 namespace WLJ
 
@@ -42,9 +42,9 @@ def TripleSieveBound : Prop :=
   ∃ C : ℝ, ∀ g s : ℕ, 1 ≤ g → 1 ≤ s → ∀ X : ℝ, 16 ≤ X →
     ((tripleSet g s X).card : ℝ) ≤ C * X * log (g * s + 2) ^ 3 * log (log X) ^ 3 / log X ^ 3
 
-/-- **Theorem 1** (Conjecture 9 of the paper): the primes classified by level are rarefying among
+/-- **Conjecture 9** of the paper: the primes classified by level are rarefying among
 the primes, i.e. `#{n < N | P n is classified by level} / N → 0`. -/
-def Theorem1 : Prop :=
+def Conjecture9 : Prop :=
   Tendsto (fun N : ℕ => (levelCount N : ℝ) / N) atTop (𝓝 0)
 
 /-! ### Step 1: summing the sieve bound -/
@@ -268,9 +268,9 @@ theorem levelCount_div_le {C : ℝ} (hC0 : 0 ≤ C)
                 ring
     _ = majorant C x := by simp [majorant, hy]
 
-/-- **Theorem 1, conditional on the sieve bound.** If `TripleSieveBound` holds, then the primes
+/-- **Conjecture 9, conditional on the sieve bound.** If `TripleSieveBound` holds, then the primes
 classified by level have density zero among the primes. -/
-theorem theorem1_of_sieve (H : TripleSieveBound) : Theorem1 := by
+theorem conjecture9_of_sieve (H : TripleSieveBound) : Conjecture9 := by
   obtain ⟨C₀, hC₀⟩ := H
   set C := max C₀ 0 with hCdef
   have hC0 : 0 ≤ C := le_max_right _ _

@@ -12,7 +12,7 @@ Ingredients:
 * the count in residue classes from `RootCount.lean`,
 * Rankin's trick for the tail of the inclusion–exclusion sum.
 -/
-import Theorem1inLean.Sieve.RootCount
+import Conjecture9.Sieve.RootCount
 
 namespace WLJ.Sieve
 

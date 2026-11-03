@@ -4,7 +4,7 @@ Each `#print axioms` line lists the axioms a theorem depends on.  A complete pro
 Lean's three standard axioms `propext`, `Classical.choice`, `Quot.sound`; the word `sorryAx` would
 appear if any step were left unproved.
 -/
-import Theorem1inLean
+import Conjecture9
 
 open WLJ
 
@@ -15,7 +15,7 @@ open WLJ
 #print WLJ.level
 #print WLJ.ClassifiedByLevel
 #print WLJ.levelCount
-#print WLJ.Theorem1
+#print WLJ.Conjecture9
 #print WLJ.TripleSieveBound
 
 #check @WLJ.lemma_1_1
@@ -26,9 +26,9 @@ open WLJ
 #check @WLJ.lval_eq_mul_prime_of_classifiedByLevel
 #check @WLJ.levelCount_le
 #check @WLJ.Table2.classifiedByLevel_P_small
-#check @WLJ.theorem1_of_sieve
+#check @WLJ.conjecture9_of_sieve
 #check @WLJ.Sieve.tripleSieveBound
-#check @WLJ.theorem1
+#check @WLJ.conjecture9
 
 -- The axioms used by the proofs.
 #print axioms WLJ.lemma_1_1
@@ -39,6 +39,6 @@ open WLJ
 #print axioms WLJ.lval_eq_mul_prime_of_classifiedByLevel
 #print axioms WLJ.levelCount_le
 #print axioms WLJ.Table2.classifiedByLevel_P_small
-#print axioms WLJ.theorem1_of_sieve
+#print axioms WLJ.conjecture9_of_sieve
 #print axioms WLJ.Sieve.tripleSieveBound
-#print axioms WLJ.theorem1
+#print axioms WLJ.conjecture9

@@ -9,9 +9,9 @@ to obtain, for all `g, s ≥ 1` and `X ≥ 16`,
 
   #{q ≤ X | q, sq+g, sq+2g prime} ≤ C · X · log(gs+2)³ · (log log X)³ / (log X)³.
 -/
-import Theorem1inLean.Theorem1
-import Theorem1inLean.Sieve.Brun
-import Theorem1inLean.Sieve.PrimeSums
+import Conjecture9.Main
+import Conjecture9.Sieve.Brun
+import Conjecture9.Sieve.PrimeSums
 
 namespace WLJ.Sieve
 
@@ -440,8 +440,8 @@ end WLJ.Sieve
 
 namespace WLJ
 
-/-- **Theorem 1** (Conjecture 9 of arXiv:0711.0865), unconditionally: the primes classified by
+/-- **Conjecture 9** of arXiv:0711.0865, proved unconditionally: the primes classified by
 level are rarefying among the primes. -/
-theorem theorem1 : Theorem1 := theorem1_of_sieve Sieve.tripleSieveBound
+theorem conjecture9 : Conjecture9 := conjecture9_of_sieve Sieve.tripleSieveBound
 
 end WLJ

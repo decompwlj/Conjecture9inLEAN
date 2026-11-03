@@ -5,7 +5,7 @@ We evaluate the (computable) definitions of `Decomposition.lean` on the list of 
 primes and check, by `decide` (i.e. inside the Lean kernel), that we recover exactly the
 weights, levels, jumps and `l_n` of Table 2 of arXiv:0711.0865 (paper index `n` = our `n - 1`).
 -/
-import Theorem1inLean.Primes
+import Conjecture9.Primes
 
 namespace WLJ.Table2
 

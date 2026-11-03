@@ -24,7 +24,7 @@ if echo "$out" | grep -q "sorryAx"; then
   echo "FAILED: some proof uses sorry." >&2
   exit 1
 fi
-if grep -rnE "^\s*axiom\b" Theorem1inLean/ ; then
+if grep -rnE "^\s*axiom\b" Conjecture9/ ; then
   echo "FAILED: the sources declare a new axiom." >&2
   exit 1
 fi

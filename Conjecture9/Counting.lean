@@ -12,7 +12,7 @@ For every `N` and every `G ≥ 0`, writing `x = P N`,
   so that `P n = s q + g_n` and `P (n+1) = s q + 2 g_n` are prime: `n` is recorded by a prime
   triple.
 -/
-import Theorem1inLean.Primes
+import Conjecture9.Primes
 
 namespace WLJ
 

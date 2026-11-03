@@ -17,7 +17,7 @@ Let `d = d_n` be the jump. A *decomposition* of `a_n` is a pair `(k, L)` with
   the quotient is the level and the remainder is the jump.
 * `isLeast_weight`: `k_n = min {k | k > d_n, a_n mod k = d_n}`.
 -/
-import Theorem1inLean.Decomposition
+import Conjecture9.Decomposition
 
 namespace WLJ
 

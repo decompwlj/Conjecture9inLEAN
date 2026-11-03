@@ -1,12 +1,55 @@
-# Theorem 1 in Lean
+<p align="center">
+  <img src=".github/assets/social-card.png" alt="Conjecture 9: the primes classified by level are rarefying among the primes. Formally verified in Lean 4 + Mathlib." width="760">
+</p>
 
-A Lean 4 / Mathlib formalization of **Theorem 1** (stated as Conjecture 9 in the paper below).
+# Conjecture 9, formally proved in Lean 4
 
-> **Theorem 1.** The prime numbers classified by level are rarefying among the primes.
+[![Verify Lean proof](https://github.com/decompwlj/Conjecture9/actions/workflows/lean.yml/badge.svg)](https://github.com/decompwlj/Conjecture9/actions/workflows/lean.yml)
+[![Lean 4](https://img.shields.io/badge/Lean-v4.35.0-0b3d91)](https://lean-lang.org)
+[![Mathlib](https://img.shields.io/badge/Mathlib-v4.35.0-5e81f4)](https://github.com/leanprover-community/mathlib4)
+[![arXiv](https://img.shields.io/badge/arXiv-0711.0865-b31b1b)](https://arxiv.org/abs/0711.0865)
 
-The decomposition comes from Rémi Eismann, *Decomposition into weight × level + jump and application
-to a new classification of primes*, [arXiv:0711.0865](https://arxiv.org/abs/0711.0865), and the
-[OEIS wiki](https://oeis.org/wiki/Decomposition_into_weight_*_level_%2B_jump).
+> **Conjecture 9.** The prime numbers classified by level are rarefying among the primes.
+>
+> From R. Eismann, *Decomposition into weight × level + jump and application to a new
+> classification of primes*, [arXiv:0711.0865](https://arxiv.org/abs/0711.0865).
+
+This repository contains a **complete, machine-checked proof** of Conjecture 9 in
+[Lean 4](https://lean-lang.org) with [Mathlib](https://github.com/leanprover-community/mathlib4).
+It has no `sorry` and no extra axioms, and GitHub Actions re-checks it on every push.
+
+## In one minute
+
+Every prime `p_n` except 2, 3 and 7 can be written as (Theorem 3.1 of the paper)
+
+```
+p_n = k_n × L_n + g_n
+```
+
+where
+
+* `g_n = p_{n+1} − p_n` is the **jump** (the prime gap),
+* `k_n`, the **weight**, is the smallest divisor of `p_n − g_n` that is larger than `g_n`,
+* `L_n = (p_n − g_n) / k_n` is the **level**.
+
+This is the Euclidean division of `p_n` by `k_n`: the quotient is `L_n` and the remainder is
+`g_n`. The prime `p_n` is **classified by level** when `k_n > L_n`, and **by weight** otherwise.
+Examples: `5, 13, 19, 23, 31, 37, 43, 47, 53` are classified by level. Among the first `5·10⁷`
+primes, 17.11 % are classified by level.
+
+**Conjecture 9** says this proportion tends to `0`. In Lean:
+
+```lean
+def Conjecture9 : Prop :=
+  Tendsto (fun N : ℕ => (#{n < N | P n is classified by level} : ℝ) / N) atTop (𝓝 0)
+
+theorem conjecture9 : Conjecture9
+```
+
+**Idea of the proof.** If `p_n` is classified by level, then `p_n − g_n = s·q` with `q` prime and
+`s ≤ g_n`. So `q`, `sq + g_n` and `sq + 2g_n` (that is, `p_n` and `p_{n+1}`) are three primes at
+once. Brun's sieve shows that such prime triples are rare, and the proportion goes to 0
+(roughly like `log log x / log x`, which explains why it is still 17 % at `5·10⁷`).
 
 ## What is proved
 
@@ -21,9 +64,9 @@ to a new classification of primes*, [arXiv:0711.0865](https://arxiv.org/abs/0711
 | Table 2 of the paper (first 17 primes) is reproduced | `WLJ.Table2.*` | ✅ checked by the kernel |
 | **Structural lemma**: if `p_n` is classified by level and `g_n⁴ ≤ l_n`, then `l_n = s·q` with `q` prime and `s ≤ g_n` | `WLJ.lval_eq_mul_prime_of_classifiedByLevel` | ✅ proved |
 | Counting bound (below) | `WLJ.levelCount_le` | ✅ proved |
-| Reduction of Theorem 1 to a sieve bound for prime triples | `WLJ.theorem1_of_sieve : TripleSieveBound → Theorem1` | ✅ proved |
+| Reduction of Conjecture 9 to a sieve bound for prime triples | `WLJ.conjecture9_of_sieve : TripleSieveBound → Conjecture9` | ✅ proved |
 | The sieve bound `TripleSieveBound` (Brun's pure sieve) | `WLJ.Sieve.tripleSieveBound` | ✅ proved |
-| **Theorem 1** | `WLJ.theorem1 : Theorem1` | ✅ **proved, unconditionally** |
+| **Conjecture 9** | `WLJ.conjecture9 : Conjecture9` | ✅ **proved, unconditionally** |
 
 There is no `sorry` and no new axiom anywhere. The proofs use only Lean's three standard axioms
 (`propext`, `Classical.choice`, `Quot.sound`).
@@ -34,7 +77,7 @@ The primes are `P n = Nat.nth Nat.Prime n`, counted from 0 (`P 0 = 2`), so the p
 `P (n-1)`. "Rarefying" is formalized as *density zero among the primes*:
 
 ```lean
-def Theorem1 : Prop :=
+def Conjecture9 : Prop :=
   Tendsto (fun N : ℕ => (#{n < N | P n is classified by level} : ℝ) / N) atTop (𝓝 0)
 ```
 
@@ -48,7 +91,7 @@ def TripleSieveBound : Prop :=
 ```
 
 This is a standard upper-bound sieve estimate for three linear forms. It is not in Mathlib, so it
-is proved here (`Theorem1inLean/Sieve/`) with **Brun's pure sieve**:
+is proved here (`Conjecture9/Sieve/`) with **Brun's pure sieve**:
 
 1. **Prime sums** (`PrimeSums.lean`).
    * Euler product: `∏_{p<N} (1 − 1/p) ≤ 1/log N`. This comes from Mathlib's Euler product for
@@ -105,7 +148,7 @@ Each push runs the workflow in `.github/workflows/lean.yml`. To check it:
 2. Open the latest **Verify Lean proof** run. A green ✓ means Lean accepted every proof.
 3. Open the "Build and check the proof" step. At the end it prints the statements and lines like
    ```
-   'WLJ.theorem1' depends on axioms: [propext, Classical.choice, Quot.sound]
+   'WLJ.conjecture9' depends on axioms: [propext, Classical.choice, Quot.sound]
    ```
    The run fails if any proof uses `sorry` or if a new axiom was added.
 
@@ -133,24 +176,54 @@ axioms used. It ends with `OK: ...` if everything is correct.
 Lean checks every proof. You only need to check that the *definitions and statements* say what you
 mean. They are short and printed by `Verify.lean`:
 
-* `Theorem1inLean/Decomposition.lean`: `jump`, `lval`, `weight`, `level`, `ClassifiedByLevel`.
-* `Theorem1inLean/Counting.lean`: `levelCount`, `tripleSet`.
-* `Theorem1inLean/Theorem1.lean`: `Theorem1` and `TripleSieveBound`.
-* `Theorem1inLean/Sieve/SieveBound.lean`: the final line, `theorem theorem1 : Theorem1`.
+* `Conjecture9/Decomposition.lean`: `jump`, `lval`, `weight`, `level`, `ClassifiedByLevel`.
+* `Conjecture9/Counting.lean`: `levelCount`, `tripleSet`.
+* `Conjecture9/Main.lean`: `Conjecture9` and `TripleSieveBound`.
+* `Conjecture9/Sieve/SieveBound.lean`: the final line, `theorem conjecture9 : Conjecture9`.
 
 ## Files
 
 ```
-Theorem1inLean/Decomposition.lean  definitions, Lemma 1.1, decomposition, structural lemma
-Theorem1inLean/Uniqueness.lean     existence and uniqueness of the decomposition
-Theorem1inLean/Primes.lean         the sequence of primes P n and its basic properties
-Theorem1inLean/Table2.lean         kernel check of Table 2 of the paper
-Theorem1inLean/Counting.lean       the combinatorial counting bound
-Theorem1inLean/Theorem1.lean       statement of Theorem 1 and its reduction to the sieve bound
-Theorem1inLean/Sieve/PrimeSums.lean   Euler product, Mertens-type and local-factor bounds
-Theorem1inLean/Sieve/RootCount.lean   roots of q(sq+g)(sq+2g) mod products of primes (CRT)
-Theorem1inLean/Sieve/Brun.lean        Brun's pure sieve for prime triples
-Theorem1inLean/Sieve/SieveBound.lean  choice of parameters; proof of TripleSieveBound and Theorem 1
+Conjecture9/Decomposition.lean  definitions, Lemma 1.1, decomposition, structural lemma
+Conjecture9/Uniqueness.lean     existence and uniqueness of the decomposition
+Conjecture9/Primes.lean         the sequence of primes P n and its basic properties
+Conjecture9/Table2.lean         kernel check of Table 2 of the paper
+Conjecture9/Counting.lean       the combinatorial counting bound
+Conjecture9/Main.lean           statement of Conjecture 9 and its reduction to the sieve bound
+Conjecture9/Sieve/PrimeSums.lean   Euler product, Mertens-type and local-factor bounds
+Conjecture9/Sieve/RootCount.lean   roots of q(sq+g)(sq+2g) mod products of primes (CRT)
+Conjecture9/Sieve/Brun.lean        Brun's pure sieve for prime triples
+Conjecture9/Sieve/SieveBound.lean  choice of parameters; proof of TripleSieveBound and Conjecture 9
 Verify.lean                        prints statements and axioms
 scripts/verify.sh                  one-command verification
 ```
+
+## Citation
+
+The decomposition and the conjecture:
+
+```bibtex
+@misc{eismann2007decomposition,
+  author        = {Eismann, R{\'e}mi},
+  title         = {Decomposition into weight $\times$ level + jump and application to a new
+                   classification of primes},
+  year          = {2007},
+  eprint        = {0711.0865},
+  archivePrefix = {arXiv},
+  primaryClass  = {math.NT},
+  url           = {https://arxiv.org/abs/0711.0865}
+}
+```
+
+This formalization:
+
+```bibtex
+@misc{conjecture9lean,
+  title        = {Conjecture 9: a formal proof in {Lean} 4},
+  howpublished = {\url{https://github.com/decompwlj/Conjecture9}},
+  year         = {2026}
+}
+```
+
+See also the [OEIS wiki page](https://oeis.org/wiki/Decomposition_into_weight_*_level_%2B_jump)
+on the decomposition.
