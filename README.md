@@ -4,7 +4,7 @@
 
 # Conjecture 9, formally proved in Lean 4
 
-[![Verify Lean proof](https://github.com/decompwlj/Conjecture9/actions/workflows/lean.yml/badge.svg)](https://github.com/decompwlj/Conjecture9/actions/workflows/lean.yml)
+[![Verify Lean proof](https://github.com/decompwlj/Conjecture9inLEAN/actions/workflows/lean.yml/badge.svg)](https://github.com/decompwlj/Conjecture9inLEAN/actions/workflows/lean.yml)
 [![Lean 4](https://img.shields.io/badge/Lean-v4.35.0-0b3d91)](https://lean-lang.org)
 [![Mathlib](https://img.shields.io/badge/Mathlib-v4.35.0-5e81f4)](https://github.com/leanprover-community/mathlib4)
 [![arXiv](https://img.shields.io/badge/arXiv-0711.0865-b31b1b)](https://arxiv.org/abs/0711.0865)
@@ -220,7 +220,7 @@ This formalization:
 ```bibtex
 @misc{conjecture9lean,
   title        = {Conjecture 9: a formal proof in {Lean} 4},
-  howpublished = {\url{https://github.com/decompwlj/Conjecture9}},
+  howpublished = {\url{https://github.com/decompwlj/Conjecture9inLEAN}},
   year         = {2026}
 }
 ```
